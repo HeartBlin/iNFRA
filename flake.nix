@@ -9,8 +9,19 @@
   };
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs.url = "https://channels.nixos.org/nixos-unstable/nixexprs.tar.xz";
     systems.url = "github:nix-systems/x86_64-linux";
+
+    chaotic = {
+      url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
+      inputs = {
+        # nixpkgs.follows = "nixpkgs"; Cache
+        home-manager.follows = "";
+        jovian.follows = "";
+        flake-schemas.follows = ""; # Detsys lmao
+        rust-overlay.follows = "";
+      };
+    };
 
     disko = {
       url = "github:nix-community/disko";

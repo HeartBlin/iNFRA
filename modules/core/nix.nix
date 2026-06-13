@@ -54,21 +54,23 @@
       substituters = [
         "https://cache.nixos.org"
         "https://kantai.cachix.org"
+        "https://nyx-cache.chaotic.cx"
       ];
 
       trusted-substituters = [
         "https://cache.nixos.org"
         "https://kantai.cachix.org"
+        "https://nyx-cache.chaotic.cx"
       ];
 
       trusted-public-keys = [
         "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
         "kantai.cachix.org-1:ldVeeaAtkCZs7BUSdLscSem+dX9wtqCT8cpks3HMFMk="
+        "nyx-cache.chaotic.cx:dJxTrgMC3V3cFfyIiBQDQorG6k1LsqurH/srpMSq7qk="
       ];
     };
   };
 
-  environment.defaultPackages = [ ];
   programs.nh = {
     enable = true;
     flake = config.kantai.flake;

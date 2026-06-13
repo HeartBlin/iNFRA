@@ -1,4 +1,4 @@
-{ pkgs, self, ... }:
+{ inputs, pkgs, self, ... }:
 
 let
   apps = "${self}/modules/apps";
@@ -59,26 +59,11 @@ in {
   # Other
   services.fstrim.enable = true;
   boot = {
-    kernelPackages = pkgs.linuxPackages_latest;
+    kernelPackages = inputs.chaotic.legacyPackages.${pkgs.stdenv.system}.linuxPackages_cachyos-lto;
     resumeDevice = "/dev/mapper/crypted";
     kernelParams = [ "resume_offset=533760" "nowatchdog" ];
     extraModprobeConfig = "blacklist sp5100_tco"; # shush
   };
-
-  # Temp
-  environment.systemPackages = with pkgs; [
-    ffmpeg
-    (yt-dlp.overrideAttrs (_: {
-      version = "master";
-      doCheck = false;
-      src = fetchFromGitHub {
-        owner = "yt-dlp";
-        repo = "yt-dlp";
-        rev = "master";
-        hash = "sha256-UstFk+z6CWky7/jnf9vli8dIbrZjjE5U0Dan/hTNF4I=";
-      };
-    }))
-  ];
 
   # System ID
   networking.hostName = "Void";

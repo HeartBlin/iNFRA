@@ -119,6 +119,7 @@ let
     };
 
     # Language Server - Meson
+    "mesonbuild.buildFolder" = "build";
     "mesonbuild.linting.enabled" = true;
     "mesonbuild.muonPath" = "${pkgs.muon}/bin/muon";
     "mesonbuild.mesonPath" = "${pkgs.meson}/bin/meson";
@@ -150,8 +151,6 @@ in {
   };
 
   environment.systemPackages = with pkgs; [
-    clang
-    kdePackages.qtdeclarative
     direnv
     (vscode-with-extensions.override {
       vscode = vscodium;

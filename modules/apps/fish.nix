@@ -7,12 +7,11 @@
     command-not-found.enable = false;
     fish = {
       enable = true;
+      shellAliases.ls = "${pkgs.eza}/bin/eza -l --icons --git";
       interactiveShellInit = ''
         set fish_greeting
         set -gx TMPDIR /tmp
       '';
-
-      shellAliases.ls = "${pkgs.eza}/bin/eza -l --icons --git";
     };
 
     starship = {

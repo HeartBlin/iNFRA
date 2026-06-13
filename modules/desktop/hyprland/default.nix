@@ -2,7 +2,10 @@
 
 {
   programs = {
-    hyprland.enable = true;
+    hyprland = {
+      enable = true;
+      withUWSM = true;
+    };
     dconf.enable = true;
     seahorse.enable = true;
   };
@@ -22,7 +25,13 @@
   };
 
   environment = {
-    etc."xdg/hypr/hyprland.lua".text = builtins.readFile ./hyprland.lua;
+    pathsToLink = [ "/share/icons" ];
+    etc = {
+      "xdg/hypr/hyprland.lua".text = builtins.readFile ./hyprland.lua;
+      "xdg/hypr/settings.lua".text = builtins.readFile ./settings.lua;
+      "xdg/hypr/binds.lua".text = builtins.readFile ./binds.lua;
+    };
+
     systemPackages = with pkgs; [
       libsecret
       nautilus

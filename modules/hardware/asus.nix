@@ -10,6 +10,7 @@ _:
     udev.extraHwdb = ''
       evdev:input:b0003v0B05p1866*
         KEYBOARD_KEY_700e4=left
+        KEYBOARD_KEY_70050=reserved
     '';
   };
 }

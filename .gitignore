@@ -1,9 +1,0 @@
-result
-result-*
-result/
-
-.direnv/
-.envrc
-.vscode/
-
-**/.qmlls.ini

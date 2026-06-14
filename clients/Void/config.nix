@@ -1,8 +1,9 @@
 { self, ... }:
 
 {
-  imports = [
-    self.nixosModules.bootloader
+  imports = with self.nixosModules; [
+    bootloader
+    secureboot
   ];
 
   # System ID

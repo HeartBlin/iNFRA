@@ -1,11 +1,14 @@
 {
   inputs = {
     nixpkgs.url = "https://channels.nixos.org/nixos-unstable/nixexprs.tar.xz";
+    systems.url = "github:nix-systems/x86_64-linux";
 
-    systems = {
-      type = "github";
-      owner = "nix-systems";
-      repo = "x86_64-linux";
+    lanzaboote = {
+      url = "github:nix-community/lanzaboote";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        pre-commit.follows = "";
+      };
     };
   };
 

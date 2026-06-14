@@ -17,7 +17,11 @@ in
     host:
     # Declare the host
       lib.nixosSystem {
-        specialArgs = { inherit (inputs) self; };
+        specialArgs = {
+          inherit inputs;
+          inherit (inputs) self;
+        };
+
         modules = [ (./. + "/${host}/config.nix") ]; # Just the config.nix file
       }
   )

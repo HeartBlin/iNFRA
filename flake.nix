@@ -3,6 +3,14 @@
     nixpkgs.url = "https://channels.nixos.org/nixos-unstable/nixexprs.tar.xz";
     systems.url = "github:nix-systems/x86_64-linux";
 
+    hjem = {
+      url = "github:feel-co/hjem";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        nix-darwin.follows = "";
+      };
+    };
+
     lanzaboote = {
       url = "github:nix-community/lanzaboote";
       inputs = {

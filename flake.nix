@@ -16,7 +16,7 @@
 
     # Map nicer names to output schema
     aliases = {
-      hosts = "nixosConfigurations";
+      clients = "nixosConfigurations";
       modules = "nixosModules";
     };
   in

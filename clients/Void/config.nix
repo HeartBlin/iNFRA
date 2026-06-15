@@ -2,6 +2,10 @@
 
 {
   imports = with self.nixosModules; [
+    # Apps
+    chromium
+
+    # Core
     bootloader
     secureboot
     user
@@ -11,6 +15,21 @@
   users.users.primaryUser = {
     name = "heartblin";
     description = "HeartBlin";
+  };
+
+  ### TESTING - VM - TESTING ###
+  services.displayManager.defaultSession = "xfce";
+  services.xserver = {
+    enable = true;
+    desktopManager = {
+      xterm.enable = false;
+      xfce.enable = true;
+    };
+  };
+
+  virtualisation.vmVariant.virtualisation = {
+    memorySize = 8192;
+    cores = 8;
   };
 
   # System ID

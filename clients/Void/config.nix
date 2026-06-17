@@ -1,63 +1,105 @@
 { inputs, pkgs, self, ... }:
 
-let
-  apps = "${self}/modules/apps";
-  core = "${self}/modules/core";
-  desktop = "${self}/modules/desktop";
-  hardware = "${self}/modules/hardware";
-in {
-  imports = [
-    # Core
-    "${core}/boot.nix"
-    "${core}/i18n.nix"
-    "${core}/networking.nix"
-    "${core}/nix.nix"
-    "${core}/security.nix"
-    "${core}/sudo.nix"
-    "${core}/user.nix"
-    "${core}/vars.nix"
-    "${core}/zram.nix"
-
+{
+  imports = with self.nixosModules; [
     # Apps
-    "${apps}/chromium.nix"
-    "${apps}/fish.nix"
-    "${apps}/foot.nix"
-    "${apps}/gaming.nix"
-    "${apps}/git.nix"
-    "${apps}/ssh.nix"
-    "${apps}/uni.nix"
-    "${apps}/vscodium.nix"
-    "${apps}/waydroid.nix"
-    "${apps}/winboat.nix"
+    chromium
+    foot
+    gaming
+    git
+    nh
+    shell
+    ssh
+    vscodium
+    waydroid
+    winboat
+
+    # Core
+    bootloader
+    disko
+    i18n
+    networking
+    nix
+    quietboot
+    secureboot
+    user
+    zram
 
     # Desktop
-    "${desktop}/fonts.nix"
-    "${desktop}/gdm.nix"
-    "${desktop}/hyprland"
-    "${desktop}/quickshell"
-    "${desktop}/quietBoot.nix"
-    "${desktop}/rofi.nix"
-    "${desktop}/theme.nix"
+    fonts
+    greetd
+    hyprland
+    quickshell
+    rofi
+    theme
 
     # Hardware
-    "${hardware}/amd.nix"
-    "${hardware}/asus.nix"
-    "${hardware}/audio.nix"
-    "${hardware}/bluetooth.nix"
-    "${hardware}/nvidia.nix"
-    "${hardware}/yubi.nix"
+    amd
+    asus
+    audio
+    bluetooth
+    nvidia
+
+    # Security
+    sudo
+    yubikey
+
+    # Services
+    tailscale
+
+    ./disko.nix
   ];
 
-  # Custom options
-  kantai = rec {
-    user = "heartblin";
-    email = "161874560+HeartBlin@users.noreply.github.com";
+  ## Module Overriding
+  # git.nix
+  programs.git.config.user = {
     name = "HeartBlin";
-    flake = "/home/${user}/Projects/Kantai";
+    email = "161874560+HeartBlin@users.noreply.github.com";
   };
 
-  # Other
+  # nh.nix
+  programs.nh.flake = "/home/heartblin/Projects/Kantai";
+
+  # nvidia.nix
+  hardware.nvidia = {
+    package = inputs.chaotic.unrestrictedPackages.${pkgs.stdenv.system}.linuxPackages_cachyos.nvidiaPackages.mkDriver {
+      version = "610.43.02";
+      sha256_64bit = "sha256-MDSgVLtM33dS/43CclZMsQVROAS/9TU4lFkBsWyndGM=";
+      sha256_aarch64 = "sha256-isWTnokUA/dzWocFBLalnk4+O5gSExVjs3dVpdYTU88=";
+      openSha256 = "sha256-hP5NVZZ4vGsACHLmUDKq4uckpd/kn1GxCSYnnJfAuBs=";
+      settingsSha256 = "sha256-0YAhufRgjDW+uR+kjaTb154fibpcDw8QowfrucoZsKE=";
+      persistencedSha256 = "sha256-dObfc/suksLZr0CsU1GHtDJS2EeHO93eopkN2BLGklg=";
+      patches = [ ];
+    };
+
+    prime = {
+      nvidiaBusId = "PCI:1@0:0:0";
+      amdgpuBusId = "PCI:6@0:0:0";
+      offload = {
+        enable = true;
+        enableOffloadCmd = true;
+      };
+    };
+  };
+
+  # user.nix
+  users.users.primaryUser = {
+    name = "heartblin";
+    description = "HeartBlin";
+  };
+
+  ## Host Specifics
+  # My left arrow key is broken. Remap to right control, and disable it
+  services.udev.extraHwdb = ''
+    evdev:input:b0003v0B05p1866*
+      KEYBOARD_KEY_700e4=left
+      KEYBOARD_KEY_70050=reserved
+  '';
+
+  # I want fstrim
   services.fstrim.enable = true;
+
+  # Some kernel changes
   boot = {
     kernelPackages = inputs.chaotic.legacyPackages.${pkgs.stdenv.system}.linuxPackages_cachyos-lto;
     resumeDevice = "/dev/mapper/crypted";

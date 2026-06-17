@@ -16,6 +16,4 @@
       "net.core.default_qdisc" = "fq";
     };
   };
-
-  services.tailscale.enable = true;
 }

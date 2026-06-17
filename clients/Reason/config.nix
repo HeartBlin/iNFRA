@@ -1,49 +1,56 @@
 { pkgs, self, ... }:
 
-let
-  apps = "${self}/modules/apps";
-  core = "${self}/modules/core";
-  hardware = "${self}/modules/hardware";
-  server = "${self}/modules/server";
-in {
-  imports = [
-    # Core
-    "${core}/boot.nix"
-    "${core}/i18n.nix"
-    "${core}/networking.nix"
-    "${core}/nix.nix"
-    "${core}/security.nix"
-    "${core}/sudo.nix"
-    "${core}/user.nix"
-    "${core}/vars.nix"
-    "${core}/zram.nix"
-
+{
+  imports = with self.nixosModules; [
     # Apps
-    "${apps}/fish.nix"
+    nh
+    shell
+
+    # Core
+    bootloader
+    disko
+    i18n
+    networking
+    nix
+    secureboot
+    user
+    zram
 
     # Hardware
-    "${hardware}/intel.nix"
+    intel
 
-    # Server
-    "${server}/backup.nix"
-    "${server}/caddy.nix"
-    "${server}/immich.nix"
-    "${server}/jellyfin.nix"
-    "${server}/samba.nix"
-    "${server}/scrutiny.nix"
-    "${server}/secrets.nix"
-    "${server}/ssh.nix"
-    "${server}/vaultwarden.nix"
+    # Security
+    sudo
+
+    # Services
+    backup
+    caddy
+    immich
+    jellyfin
+    openssh
+    samba
+    scrutiny
+    tailscale
+    vaultwarden
+
+    ./disko.nix
+    ./secrets.nix
   ];
 
-  # Custom options
-  kantai = {
-    user = "server";
-    name = "Reason";
+  ## Module Overriding
+  # user.nix
+  users.users.primaryUser = {
+    name = "server";
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEISJfRd1QeAC48Vkd4gNLZj9bPnmXDal2F9rc+3V9oI heartblin@Void"
+    ];
   };
 
-  # Misc
+  ## Host Specifics
+  # I want fstrim
   services.fstrim.enable = true;
+
+  # Kernel things
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;
     kernelParams = [
@@ -54,12 +61,8 @@ in {
     ];
   };
 
-  users.users."server".openssh.authorizedKeys.keys = [
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEISJfRd1QeAC48Vkd4gNLZj9bPnmXDal2F9rc+3V9oI heartblin@Void"
-  ];
-
   # System ID
-  networking.hostName = "Reason";
+  networking.hostName = "Void";
   nixpkgs.hostPlatform = "x86_64-linux";
   system.stateVersion = "26.05";
 }

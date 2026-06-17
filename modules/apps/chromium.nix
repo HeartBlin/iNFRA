@@ -6,26 +6,27 @@ let
     "jplgfhpmjnbigmhklmmbgecoobifkmpa" # ProtonVPN
     "ddkjiahejlhfcafbddmgiahcphecmpfh" # uBlock Origin Lite
   ];
-in {
-  environment.systemPackages = [
-    (pkgs.chromium.override {
-      commandLineArgs = [
-        "--enable-blink-features=MiddleClickAutoscroll"
-        "--enable-features=${lib.concatStringsSep "," [
-          "AcceleratedVideoEncoder"
-          "AcceleratedVideoDecodeLinuxGL"
-          "AcceleratedVideoDecodeLinuxZeroCopyGL"
-          "VaapiOnNvidiaGPUs"
-        ]}"
-        "--test-type" # Disables the complaint about MiddleClickAutoscroll at start
-      ];
-    })
+
+  vaapiFeatures = [
+    "AcceleratedVideoEncoder"
+    "AcceleratedVideoDecodeLinuxGL"
+    "AcceleratedVideoDecodeLinuxZeroCopyGL"
+    "VaapiOnNvidiaGPUs"
   ];
 
+  mkUrl = name: url: {
+    inherit name url;
+    type = "url";
+  };
+
+  mkFolder = name: children: {
+    inherit name children;
+    type = "folder";
+  };
+in {
   programs.chromium = {
     enable = true;
     inherit extensions;
-
     extraOpts = {
       "BrowserSignin" = 0;
       "SyncDisabled" = true;
@@ -38,84 +39,41 @@ in {
       "EnableMediaRouter" = false;
       "BookmarkBarEnabled" = true;
       "ShowHomeButton" = false;
-
       # Disallow imperative extension installs
       "ExtensionInstallBlocklist" = [ "*" ];
       "ExtensionInstallAllowlist" = extensions;
     };
   };
 
-  kantai.home.".config/chromium/Default/Bookmarks".text = builtins.toJSON {
-    "version" = 1;
-    "checksum" = "00000000000000000000000000000000"; # Whatever
-    "roots" = {
-      "bookmark_bar" = {
-        "name" = "Bookmarks Bar";
-        "type" = "folder";
-        "children" = [
-          {
-            "name" = "Selfhosted";
-            "type" = "folder";
-            "children" = [
-              {
-                "name" = "Immich";
-                "url" = "https://photos.heartblin.eu";
-                "type" = "url";
-              }
-              {
-                "name" = "Jellyfin";
-                "url" = "https://movies.heartblin.eu";
-                "type" = "url";
-              }
-              {
-                "name" = "Scrutiny";
-                "url" = "https://scrutiny.heartblin.eu";
-                "type" = "url";
-              }
-              {
-                "name" = "VaultWarden";
-                "url" = "https://vault.heartblin.eu";
-                "type" = "url";
-              }
-            ];
-          }
-          {
-            "name" = "YouTube";
-            "url" = "https://youtube.com";
-            "type" = "url";
-          }
-          {
-            "name" = "GitHub";
-            "url" = "https://github.com";
-            "type" = "url";
-          }
-          {
-            "name" = "Teams";
-            "url" = "https://teams.microsoft.com/v2/";
-            "type" = "url";
-          }
-          {
-            "name" = "Options";
-            "url" = "https://search.nixos.org/options";
-            "type" = "url";
-          }
-          {
-            "name" = "Packages";
-            "url" = "https://search.nixos.org/packages";
-            "type" = "url";
-          }
-        ];
-      };
-      "other" = {
-        "name" = "Other Bookmarks";
-        "type" = "folder";
-        "children" = [ ];
-      };
-      "synced" = {
-        "name" = "Mobile Bookmarks";
-        "type" = "folder";
-        "children" = [ ];
-      };
+  environment.systemPackages = [
+    (pkgs.chromium.override {
+      commandLineArgs = [
+        "--test-type" # Disables the warning about MiddleClickAutoscroll
+        "--enable-blink-features=MiddleClickAutoscroll"
+        "--enable-features=${lib.concatStringsSep "," vaapiFeatures}"
+      ];
+    })
+  ];
+
+  hjem.users.primaryUser.files.".config/chromium/Default/Bookmarks".text = builtins.toJSON {
+    version = 1;
+    checksum = "00000000000000000000000000000000"; # Whatever
+    roots = {
+      bookmark_bar = mkFolder "Bookmarks Bar" [
+        (mkFolder "Selfhosted" [
+          (mkUrl "Immich" "https://photos.heartblin.eu")
+          (mkUrl "Jellyfin" "https://movies.heartblin.eu")
+          (mkUrl "Scrutiny" "https://scrutiny.heartblin.eu")
+          (mkUrl "VaultWarden" "https://vault.heartblin.eu")
+        ])
+        (mkUrl "YouTube" "https://youtube.com")
+        (mkUrl "GitHub" "https://github.com")
+        (mkUrl "Teams" "https://teams.microsoft.com/v2/")
+        (mkUrl "Options" "https://search.nixos.org/options")
+        (mkUrl "Packages" "https://search.nixos.org/packages")
+      ];
+      other = mkFolder "Other Bookmarks" [ ];
+      synced = mkFolder "Mobile Bookmarks" [ ];
     };
   };
 }

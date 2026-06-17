@@ -10,10 +10,7 @@
 
     steam = {
       enable = true;
-      extraCompatPackages = [
-        pkgs.proton-ge-bin
-        pkgs.dwproton-bin
-      ];
+      extraCompatPackages = [ pkgs.dwproton-bin ];
 
       package = pkgs.steam.override {
         extraArgs = "-system-composer";

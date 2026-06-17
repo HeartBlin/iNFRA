@@ -2,15 +2,18 @@
 
 {
   programs = {
-    hyprland = {
-      enable = true;
-      withUWSM = true;
-    };
     dconf.enable = true;
     seahorse.enable = true;
   };
 
-  services.gvfs.enable = true;
+  services = {
+    gvfs.enable = true;
+    gnome = {
+      gcr-ssh-agent.enable = true;
+      gnome-keyring.enable = true;
+    };
+  };
+
   security.polkit.enable = true;
   systemd.user.services.polkit-gnome-authentication-agent-1 = {
     description = "polkit-gnome-authentication-agent-1";
@@ -26,12 +29,6 @@
 
   environment = {
     pathsToLink = [ "/share/icons" ];
-    etc = {
-      "xdg/hypr/hyprland.lua".text = builtins.readFile ./hyprland.lua;
-      "xdg/hypr/settings.lua".text = builtins.readFile ./settings.lua;
-      "xdg/hypr/binds.lua".text = builtins.readFile ./binds.lua;
-    };
-
     systemPackages = with pkgs; [
       libsecret
       nautilus

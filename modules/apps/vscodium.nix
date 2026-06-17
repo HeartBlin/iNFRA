@@ -144,7 +144,7 @@ let
   };
 in {
   fonts.packages = [ pkgs.googlesans-code ];
-  kantai.home = {
+  hjem.users.primaryUser.files = {
     ".vscode-oss/argv.json".text = argvJSON;
     ".config/VSCodium/User/settings.json".text = settingsJSON;
     ".config/VSCodium/User/keybindings.json".text = keybindJSON;

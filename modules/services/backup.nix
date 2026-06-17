@@ -1,7 +1,6 @@
-{ config, pkgs, ... }:
+{ config, ... }:
 
 {
-  environment.systemPackages = [ pkgs.rclone ];
   services.restic.backups = {
     vaultwarden = {
       repository = "s3:https://s3.eu-central-lz-buh-a.cloud.ovh.net/heartblin/vaultwarden";

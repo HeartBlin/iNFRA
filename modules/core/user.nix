@@ -1,19 +1,24 @@
-{ config, ... }:
+{ config, inputs, ... }:
 
 {
-  users.users.${config.kantai.user} = {
-    isNormalUser = true;
-    description = config.kantai.name;
-    initialPassword = "password";
-    extraGroups = [ "networkmanager" "video" "wheel" ];
-  };
+  imports = [ inputs.hjem.nixosModules.default ];
+  config = let
+    userName = config.users.users.primaryUser.name;
+    userHome = config.users.users.primaryUser.home;
+  in {
+    users.users.primaryUser = {
+      isNormalUser = true;
+      initialPassword = "changeme";
+      extraGroups = [ "wheel" "networkmanager" ];
+    };
 
-  hjem = {
-    clobberByDefault = true;
-    users.${config.kantai.user} = {
-      inherit (config.kantai) user;
-      enable = true;
-      directory = "/home/${config.kantai.user}";
+    hjem = {
+      clobberByDefault = true;
+      users.primaryUser = {
+        enable = true;
+        user = userName;
+        directory = userHome;
+      };
     };
   };
 }

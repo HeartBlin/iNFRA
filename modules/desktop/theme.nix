@@ -1,7 +1,6 @@
 { config, lib, pkgs, ... }:
 
 let
-  inherit (config.kantai) user;
   gtkSettings.Settings = {
     gtk-theme-name = "Adwaita-dark";
     gtk-icon-theme-name = "Adwaita";
@@ -49,18 +48,18 @@ in {
     }
   ];
 
-  kantai.home = {
+  hjem.users.primaryUser.files = {
     ".config/gtk-3.0/settings.ini".text = iniContent;
     ".config/gtk-4.0/settings.ini".text = iniContent;
     ".gtkrc-2.0".text = gtk2Content;
 
     # /mods and /mod_overrides are cause I mod PayDay 2
     ".config/gtk-3.0/bookmarks".text = ''
-      file:///home/${user}/Documents Documents
-      file:///home/${user}/Downloads Downloads
-      file:///home/${user}/Pictures Pictures
-      file:///home/${user}/Music Music
-      file:///home/${user}/Videos Videos
+      file://${config.users.users.primaryUser.home}/Documents Documents
+      file://${config.users.users.primaryUser.home}/Downloads Downloads
+      file://${config.users.users.primaryUser.home}/Pictures Pictures
+      file://${config.users.users.primaryUser.home}/Music Music
+      file://${config.users.users.primaryUser.home}/Videos Videos
       file:///mnt/intel Storage
       file:///mnt/intel/SteamLibrary/steamapps/common/PAYDAY%202/mods Mods
       file:///mnt/intel/SteamLibrary/steamapps/common/PAYDAY%202/assets/mod_overrides Mod Overrides

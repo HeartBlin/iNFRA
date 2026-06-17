@@ -6,4 +6,5 @@ result/
 .envrc
 .vscode/
 
-**/.qmlls.ini
+**.qcow2
+**.fd

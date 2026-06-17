@@ -5,14 +5,14 @@
     Host github.com
       HostName github.com
       User git
-      IdentityFile /home/${config.kantai.user}/.ssh/GitHubAuth
+      IdentityFile ${config.users.users.primaryUser.home}/.ssh/GitHubAuth
       IdentitiesOnly yes
 
     Host Reason
       HostName 100.64.0.1
       Port 22
       User server
-      IdentityFile /home/${config.kantai.user}/.ssh/reason
+      IdentityFile ${config.users.users.primaryUser.home}/.ssh/reason
       IdentitiesOnly yes
   '';
 }

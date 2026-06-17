@@ -33,4 +33,11 @@
     "f /srv/immich/backups/.immich 0600 immich immich - backups"
     "f /srv/immich/encoded-video/.immich 0600 immich immich - encoded-video"
   ];
+
+  services.caddy.virtualHosts."photos.heartblin.eu" = {
+    useACMEHost = "heartblin.eu";
+    extraConfig = ''
+      reverse_proxy http://localhost:${toString config.services.immich.port}
+    '';
+  };
 }

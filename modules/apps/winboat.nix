@@ -1,7 +1,7 @@
-{ config, lib, pkgs, ... }:
+{ lib, pkgs, ... }:
 
 {
-  users.users.${config.kantai.user}.extraGroups = [ "libvirtd" "kvm" ];
+  users.users.primaryUser.extraGroups = [ "libvirtd" "kvm" ];
   virtualisation = {
     containers.enable = true;
     podman = {

@@ -3,6 +3,22 @@
     nixpkgs.url = "https://channels.nixos.org/nixos-unstable/nixexprs.tar.xz";
     systems.url = "github:nix-systems/x86_64-linux";
 
+    chaotic = {
+      url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
+      inputs = {
+        # nixpkgs.follows = "nixpkgs"; Cache
+        home-manager.follows = "";
+        jovian.follows = "";
+        flake-schemas.follows = ""; # Detsys lmao
+        rust-overlay.follows = "";
+      };
+    };
+
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     hjem = {
       url = "github:feel-co/hjem";
       inputs = {
@@ -11,12 +27,28 @@
       };
     };
 
+    hyprland.url = "github:hyprwm/Hyprland";
+    kantaiWalls = {
+      url = "git+ssh://git@github.com/HeartBlin/KantaiWalls.git";
+      flake = false; # Literally just PNGs
+    };
+
     lanzaboote = {
       url = "github:nix-community/lanzaboote";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         pre-commit.follows = "";
       };
+    };
+
+    nix-index-database = {
+      url = "github:nix-community/nix-index-database";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
@@ -30,6 +62,9 @@
       clients = "nixosConfigurations";
       modules = "nixosModules";
     };
+
+    # Ignored folders
+    ignore = [ "secrets" ];
   in
     # Transform a list to the flake outputs
     lib.mapAttrs' (n: _: let
@@ -37,11 +72,15 @@
     in
       # Create key-value pair of the output
       lib.nameValuePair out (
-        if builtins.elem out [ "formatter" "packages" ] # These need 'system'
+        if builtins.elem out [ "checks" "formatter" "packages" ] # These need 'system'
         then lib.genAttrs systems (system: load n { inherit inputs system; }) # Give 'system'
         else load n inputs # No 'system' needed
       ))
     # Get CWD, filter out .git
     (builtins.readDir ./.
-      |> lib.filterAttrs (n: v: v == "directory" && !lib.hasPrefix "." n));
+      |> lib.filterAttrs (n: v:
+        v
+        == "directory"
+        && !lib.hasPrefix "." n
+        && !(builtins.elem n ignore)));
 }

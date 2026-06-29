@@ -1,4 +1,4 @@
-{ inputs, ... }:
+{ inputs, pkgs, ... }:
 
 {
   imports = [ inputs.hyprland.nixosModules.default ./_supporting.nix ];
@@ -7,6 +7,8 @@
       hyprland = {
         enable = true;
         withUWSM = false;
+        package = inputs.hyprland.packages.${pkgs.stdenv.system}.hyprland;
+        portalPackage = inputs.hyprland.packages.${pkgs.stdenv.system}.xdg-desktop-portal-hyprland;
         settings = {
           monitor = [
             "eDP1, 1920x1080@144, 0x0, 1"
@@ -24,6 +26,7 @@
             "foot --server"
             "qs"
             "mako --default-timeout 2000 --ignore-timeout 1"
+            "wayscriber --daemon"
             "sleep 2 && nm-applet"
             "sleep 1.5 && blueman-applet"
             "sleep 1 && rog-control-center"
@@ -85,7 +88,8 @@
             "Super, Space, exec, rofi -show drun"
             "Super, E, exec, nautilus"
             "Super, W, exec, chromium"
-            ", Print, exec, hyprshot -o ~/Pictures/Screenshots -m region"
+            "Super, Print, exec, hyprshot -o ~/Pictures/Screenshots -m region"
+            ", Print, exec, wayscriber --daemon-toggle --freeze"
 
             "LAlt, E, exec, qs ipc call wp walk 1"
             "LAlt, Q, exec, qs ipc call wp walk -1"

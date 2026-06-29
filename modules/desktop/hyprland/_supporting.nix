@@ -41,6 +41,7 @@
       mako
       libnotify
       blueman
+      wayscriber
     ];
   };
 }

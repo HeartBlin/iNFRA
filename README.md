@@ -1,10 +1,9 @@
-<h1 align="center"> Kantai </h1>
+<h1 align="center"> Infra </h1>
 <h5 align="center"> Perpetually beta btw </h5>
 
 <div align="center">
 
-[![Check flake](https://github.com/HeartBlin/Kantai/actions/workflows/checks.yaml/badge.svg)](https://github.com/HeartBlin/Kantai/actions/workflows/checks.yaml)
-[![License: MIT](https://img.shields.io/github/license/HeartBlin/Kantai?logo=github&label=License&color=%234c1)](./LICENSE)
+[![License: MIT OR Unlicense](https://img.shields.io/badge/License-MIT%20%7C%20Unlicense-blue.svg)](LICENSE)
 
 </div>
 
@@ -23,21 +22,6 @@
 <h2> Hosts </h2>
 
 <table align="center">
-<tr>
-<td>
-
-**[`Reason`](/clients/Reason/config.nix)** - Server
-
-| Key | Value |
-|---|---|
-| Motherboard | MSI H110M ECO |
-| CPU | Intel® Core™ i3-7100 |
-| RAM | 16GB DDR4-2133 |
-| GPU | Intel® HD Graphics 630 |
-| Storage | [512GB SSD](/clients/Reason/disko.nix) |
-
-</td>
-<td>
 
 **[`Void`](/clients/Void/config.nix)** - Laptop
 
@@ -69,4 +53,4 @@ Thanks! **^\_\_^**
 
 <h2> License </h2>
 
-This repo follows the [MIT License](https://opensource.org/licenses/MIT).
+This repo mainly follows the [Unlicense](https://unlicense.org/). The [MIT License](https://opensource.org/licenses/MIT) is an alternative that can be choosen to be followed instead.

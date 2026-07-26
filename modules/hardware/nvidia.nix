@@ -1,10 +1,7 @@
 { pkgs, ... }:
 
 {
-  nixpkgs.config = {
-    allowUnfree = true;
-    cudaSupport = true;
-  };
+  nixpkgs.config.allowUnfree = true;
 
   environment.systemPackages = [ pkgs.btop ];
   services.xserver.videoDrivers = [ "nvidia" ];
@@ -29,13 +26,5 @@
     };
   };
 
-  boot = {
-    kernelParams = [ "nvidia-drm.modeset=1" "nvidia-drm.fbdev=1" ];
-    initrd.kernelModules = [
-      "nvidia"
-      "nvidia_modeset"
-      "nvidia_uvm"
-      "nvidia_drm"
-    ];
-  };
+  boot.kernelParams = [ "nvidia-drm.modeset=1" "nvidia-drm.fbdev=1" ];
 }

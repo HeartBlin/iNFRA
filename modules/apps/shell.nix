@@ -3,16 +3,14 @@
 {
   imports = [ inputs.nix-index-database.nixosModules.default ];
   config = {
+    environment.sessionVariables.TMPDIR = "/tmp";
     users.users.primaryUser.shell = pkgs.fish;
     programs = {
       command-not-found.enable = false;
       fish = {
         enable = true;
         shellAliases.ls = "${pkgs.eza}/bin/eza -l --icons --git";
-        interactiveShellInit = ''
-          set fish_greeting
-          set -gx TMPDIR /tmp
-        '';
+        interactiveShellInit = "set fish_greeting";
       };
 
       starship = {

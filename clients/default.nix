@@ -1,4 +1,4 @@
-inputs:
+{ inputs, self }:
 
 let
   inherit (inputs.nixpkgs) lib;
@@ -17,11 +17,7 @@ in
     host:
     # Declare the host
       lib.nixosSystem {
-        specialArgs = {
-          inherit inputs;
-          inherit (inputs) self;
-        };
-
+        specialArgs = { inherit inputs self; };
         modules = [ (./. + "/${host}/config.nix") ]; # Just the config.nix file
       }
   )

@@ -4,15 +4,15 @@
   imports = with self.nixosModules; [
     # Apps
     chromium
-    foot
     gaming
     git
     nh
     shell
     ssh
+    uni
+    virt-manager
     vscodium
     waydroid
-    winboat
 
     # Core
     bootloader
@@ -20,18 +20,13 @@
     i18n
     networking
     nix
-    quietboot
+    plymouth
     secureboot
     user
     zram
 
     # Desktop
-    fonts
-    greetd
-    hyprland
-    quickshell
-    rofi
-    theme
+    gnome
 
     # Hardware
     amd
@@ -41,7 +36,6 @@
     nvidia
 
     # Security
-    sudo
     yubikey
 
     # Services
@@ -58,7 +52,7 @@
   };
 
   # nh.nix
-  programs.nh.flake = "/home/heartblin/Projects/Kantai";
+  programs.nh.flake = "/home/heartblin/Projects/infra";
 
   # nvidia.nix
   hardware.nvidia.prime = {
@@ -90,13 +84,19 @@
   # Some kernel changes
   boot = {
     kernelPackages = pkgs.linuxPackages_xanmod_latest;
-    resumeDevice = "/dev/mapper/crypted";
-    kernelParams = [ "resume_offset=533760" "nowatchdog" ];
-    extraModprobeConfig = "blacklist sp5100_tco"; # shush
+    kernelModules = [ "kvm-amd" ];
+    initrd = {
+      availableKernelModules = [ "nvme" "xhci_pci" "usbhid" "usb_storage" "sd_mod" ];
+      kernelModules = [ "dm-snapshot" ];
+      luks.devices = {
+        "crypt-samsung".crypttabExtraOpts = [ "fido2-device=auto" ];
+        "crypt-intel".crypttabExtraOpts = [ "fido2-device=auto" ];
+      };
+    };
   };
 
   # System ID
   networking.hostName = "Void";
   nixpkgs.hostPlatform = "x86_64-linux";
-  system.stateVersion = "26.05";
+  system.stateVersion = "26.11";
 }

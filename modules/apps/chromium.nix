@@ -5,6 +5,7 @@ let
     "nngceckbapebfimnlniiiahkandclblb" # Bitwarden
     "jplgfhpmjnbigmhklmmbgecoobifkmpa" # ProtonVPN
     "ddkjiahejlhfcafbddmgiahcphecmpfh" # uBlock Origin Lite
+    "gphhapmejobijbbhgpjhcjognlahblep" # GNOME Shell integration
   ];
 
   vaapiFeatures = [
@@ -66,6 +67,7 @@ in {
           (mkUrl "Scrutiny" "https://scrutiny.heartblin.eu")
           (mkUrl "VaultWarden" "https://vault.heartblin.eu")
         ])
+        (mkUrl "Mailbox" "https://app.mailbox.org")
         (mkUrl "YouTube" "https://youtube.com")
         (mkUrl "GitHub" "https://github.com")
         (mkUrl "Teams" "https://teams.microsoft.com/v2/")

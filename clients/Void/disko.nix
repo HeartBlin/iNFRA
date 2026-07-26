@@ -18,45 +18,14 @@
               };
             };
 
-            luks = {
+            luksSamsung = {
               size = "100%";
               content = {
                 type = "luks";
-                name = "crypted";
-                settings.allowDiscards = true;
+                name = "crypt-samsung";
                 content = {
-                  type = "btrfs";
-                  extraArgs = [ "-f" ];
-                  subvolumes = {
-                    "/root" = {
-                      mountpoint = "/";
-                      mountOptions = [
-                        "compress=zstd"
-                        "noatime"
-                      ];
-                    };
-
-                    "/home" = {
-                      mountpoint = "/home";
-                      mountOptions = [
-                        "compress=zstd"
-                        "noatime"
-                      ];
-                    };
-
-                    "/nix" = {
-                      mountpoint = "/nix";
-                      mountOptions = [
-                        "compress=zstd"
-                        "noatime"
-                      ];
-                    };
-
-                    "/swap" = {
-                      mountpoint = "/.swapvol";
-                      swap.swapfile.size = "32G"; # Double my RAM
-                    };
-                  };
+                  type = "lvm_pv";
+                  vg = "pool";
                 };
               };
             };
@@ -69,14 +38,39 @@
         device = "/dev/disk/by-id/nvme-INTEL_SSDPEKNU512GZ_BTKA20450EZM512A";
         content = {
           type = "gpt";
-          partitions.xfs = {
+          partitions.luksIntel = {
             size = "100%";
             content = {
-              type = "filesystem";
-              format = "xfs";
-              mountpoint = "/mnt/intel";
-              mountOptions = [ "defaults" "noatime" "pquota" ];
+              type = "luks";
+              name = "crypt-intel";
+              content = {
+                type = "lvm_pv";
+                vg = "pool";
+              };
             };
+          };
+        };
+      };
+    };
+
+    lvm_vg.pool = {
+      type = "lvm_vg";
+      lvs = {
+        swap = {
+          size = "24G";
+          content = {
+            type = "swap";
+            resumeDevice = true;
+          };
+        };
+
+        root = {
+          size = "100%FREE";
+          content = {
+            type = "filesystem";
+            format = "xfs";
+            mountpoint = "/";
+            mountOptions = [ "defaults" "pquota" ];
           };
         };
       };

@@ -54,7 +54,7 @@ let
     "window.commandCenter" = false;
     "window.dialogStyle" = "custom";
     "window.menuBarVisibility" = "hidden";
-    "window.titleBarStyle" = "native";
+    "window.titleBarStyle" = "custom";
 
     # Workbench
     "workbench.colorTheme" = "Dark+";
@@ -79,6 +79,13 @@ let
     "direnv.path.executable" = "${lib.getExe pkgs.direnv}";
     "errorLens.gutterIconsEnabled" = true;
     "errorLens.messageBackgroundMode" = "message";
+
+    # Custom UI
+    "custom-ui-style.stylesheet".".container > .title"."display" = "none !important;";
+    "custom-ui-style.electron" = {
+      "frame" = false;
+      "titleBarStyle" = "hiddenInset";
+    };
 
     # Git
     "git.autofetch" = true;
@@ -118,15 +125,19 @@ let
       "editor.formatOnSave" = true;
     };
 
+    # Language Server - Rust
+    "rust-analyzer.check.command" = "clippy";
+    "[rust]" = {
+      "editor.defaultFormatter" = "rust-lang.rust-analyzer";
+      "editor.formatOnSave" = true;
+    };
+
     # Language Server - Meson
     "mesonbuild.buildFolder" = "build";
     "mesonbuild.linting.enabled" = true;
     "mesonbuild.muonPath" = "${pkgs.muon}/bin/muon";
     "mesonbuild.mesonPath" = "${pkgs.meson}/bin/meson";
     "[meson]"."editor.formatOnSave" = true;
-
-    # Language Server - QML
-    "qt-qml.qmlls.useQmlImportPathEnvVar" = true;
   };
 
   keybindJSON = builtins.toJSON [
@@ -154,40 +165,28 @@ in {
     direnv
     (vscode-with-extensions.override {
       vscode = vscodium;
-      vscodeExtensions = with pkgs.vscode-extensions;
-        [
-          # Nix
-          jnoortheen.nix-ide
-          mkhl.direnv
+      vscodeExtensions = with pkgs.vscode-extensions; [
+        # Nix
+        jnoortheen.nix-ide
+        mkhl.direnv
 
-          # C/C++
-          llvm-vs-code-extensions.vscode-clangd
+        # C/C++
+        llvm-vs-code-extensions.vscode-clangd
 
-          # Build systems
-          mesonbuild.mesonbuild
-          ms-vscode.cmake-tools
+        # Rust
+        rust-lang.rust-analyzer
 
-          # UI / UX
-          pkief.material-icon-theme
-          usernamehw.errorlens
+        # Build systems
+        mesonbuild.mesonbuild
+        ms-vscode.cmake-tools
 
-          # Origin
-          github.vscode-pull-request-github
-        ]
-        ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
-          {
-            name = "qt-qml";
-            publisher = "TheQtCompany";
-            version = "1.13.0";
-            sha256 = "sha256-WPzierXLQM+HdVb0XAx80f4Fdd34Vf7WbFzFapr5VHE=";
-          }
-          {
-            name = "qt-core";
-            publisher = "TheQtCompany";
-            version = "1.13.0";
-            sha256 = "sha256-/SAoJmKfOfLtbYn4jvtbAFIa6O7kDouv0xQVhnxFOKM=";
-          }
-        ];
+        # UI / UX
+        pkief.material-icon-theme
+        usernamehw.errorlens
+
+        # Origin
+        github.vscode-pull-request-github
+      ];
     })
   ];
 }

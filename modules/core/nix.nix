@@ -29,10 +29,10 @@
     settings = {
       flake-registry = "";
       auto-optimise-store = true;
-      allow-import-from-derivation = false;
+      allow-import-from-derivation = true;
       builders-use-substitutes = true;
       max-jobs = "auto";
-      cores = 0;
+      cores = 4;
       sandbox = true;
       sandbox-fallback = false;
       use-cgroups = true;
@@ -53,22 +53,16 @@
       substituters = [
         "https://cache.nixos.org"
         "https://kantai.cachix.org"
-        "https://nyx-cache.chaotic.cx"
-        "https://hyprland.cachix.org"
       ];
 
       trusted-substituters = [
         "https://cache.nixos.org"
         "https://kantai.cachix.org"
-        "https://nyx-cache.chaotic.cx"
-        "https://hyprland.cachix.org"
       ];
 
       trusted-public-keys = [
         "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
         "kantai.cachix.org-1:ldVeeaAtkCZs7BUSdLscSem+dX9wtqCT8cpks3HMFMk="
-        "nyx-cache.chaotic.cx:dJxTrgMC3V3cFfyIiBQDQorG6k1LsqurH/srpMSq7qk="
-        "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
       ];
     };
   };

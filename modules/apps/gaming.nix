@@ -10,8 +10,6 @@
 
     steam = {
       enable = true;
-      extraCompatPackages = [ pkgs.dwproton-bin ];
-
       package = pkgs.steam.override {
         extraArgs = "-system-composer";
         extraEnv = {
@@ -28,13 +26,6 @@
     "kernel.split_lock_mitigate" = 0;
     "kernel.sched_cfs_bandwidth_slice_us" = 3000;
     "net.ipv4.tcp_fin_timeout" = 5;
-  };
-
-  # Ananicy-cpp
-  services.ananicy = {
-    enable = true;
-    package = pkgs.ananicy-cpp;
-    rulesProvider = pkgs.ananicy-rules-cachyos;
   };
 
   # NTSync

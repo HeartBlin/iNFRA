@@ -1,7 +1,6 @@
 _:
 
 {
-  boot.initrd.luks.devices."crypted".crypttabExtraOpts = [ "fido2-device=auto" ];
   security.pam = {
     u2f = {
       enable = true;

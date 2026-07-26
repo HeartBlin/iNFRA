@@ -22,8 +22,5 @@ jobs:
           install_url: https://nixos.org/nix/install
           extra_nix_config: |
             experimental-features = nix-command flakes pipe-operators
-      - uses: cachix/cachix-action@v17
-        with:
-          name: kantai
       - name: Check flake
         run: nix flake check

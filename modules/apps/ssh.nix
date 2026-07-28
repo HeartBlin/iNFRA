@@ -9,10 +9,10 @@
       IdentitiesOnly yes
 
     Host Reason
-      HostName 100.64.0.1
+      HostName 10.0.1.1
       Port 22
       User server
-      IdentityFile ${config.users.users.primaryUser.home}/.ssh/reason
+      IdentityFile ${config.users.users.primaryUser.home}/.ssh/Reason
       IdentitiesOnly yes
   '';
 }

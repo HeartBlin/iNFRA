@@ -4,8 +4,9 @@ _:
   services.openssh = {
     enable = true;
     settings = {
-      PermitRootLogin = "prohibit-password"; 
-      PasswordAuthentication = false;  
+      PasswordAuthentication = false;
+      KbdInteractiveAuthentication = false;
+      PermitRootLogin = "no";
     };
   };
 }

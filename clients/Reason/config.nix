@@ -1,4 +1,4 @@
-{ pkgs, self, ... }:
+{ self, ... }:
 
 {
   imports = with self.nixosModules; [
@@ -28,7 +28,7 @@
   users.users.primaryUser = {
     name = "server";
     authorizedKeys.keys = [
-      "todo"
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIILBPjrPeKOH2kJLKU634wVC/e3dndCGijZv0gaz997F heartblin@Void"
     ];
   };
 

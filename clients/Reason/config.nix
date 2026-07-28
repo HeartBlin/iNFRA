@@ -24,6 +24,7 @@
     acme
     caddy
     ddns-updater
+    immich
     openssh
 
     ./disko.nix

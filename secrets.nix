@@ -10,4 +10,7 @@ in {
 
   # DDNS
   "secrets/ovh/ddns-updater.json.age".publicKeys = [ Void Reason Finality ];
+
+  # immich
+  "secrets/immich/env.age".publicKeys = [ Void Reason Finality ];
 }

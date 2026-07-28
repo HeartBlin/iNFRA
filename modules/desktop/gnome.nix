@@ -4,6 +4,8 @@ let
   # Dconf types
   int32_t = lib.gvariant.mkInt32;
   tuple = lib.gvariant.mkTuple;
+  string = lib.gvariant.type.string;
+  emptyArray = lib.gvariant.mkEmptyArray;
 
   # Vars
   cursor-theme = "Bibata-Modern-Ice";
@@ -30,6 +32,7 @@ in {
     ./_nautilus.nix
     ./_ptyxis.nix
     ./_vicinae.nix
+    ./_wallpaper.nix
   ];
 
   # Get GNOME
@@ -86,10 +89,13 @@ in {
       "org/gnome/desktop/sound".allow-volume-above-100-percent = true;
       "org/gnome/settings-daemon/plugins/power".power-button-action = "interactive";
 
-      # Extensions
       "org/gnome/shell" = {
+        # Extensions
         disable-user-extensions = false;
         enabled-extensions = map (ext: ext.extensionUuid) extensions;
+
+        # Nothing in dock
+        favorite-apps = emptyArray string;
       };
 
       # Just Perfection

@@ -22,12 +22,12 @@ let
     {
       name = "Chromium";
       command = "chromium";
-      binding = "<Super>w";
+      binding = "<Super>W";
     }
     {
       name = "VSCodium";
       command = "codium";
-      binding = "<Super>c";
+      binding = "<Super>C";
     }
     {
       name = "Terminal";
@@ -38,6 +38,16 @@ let
       name = "Vicinae";
       command = "vicinae toggle";
       binding = "<Super>Space";
+    }
+    {
+      name = "Switch Wallpaper";
+      command = "switch-wallpaper";
+      binding = "<Super>R";
+    }
+    {
+      name = "Nautilus";
+      command = "nautilus -w";
+      binding = "<Super>E";
     }
   ];
 

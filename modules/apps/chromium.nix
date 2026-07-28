@@ -8,11 +8,12 @@ let
     "gphhapmejobijbbhgpjhcjognlahblep" # GNOME Shell integration
   ];
 
-  vaapiFeatures = [
+  chromiumFeatures = [
     "AcceleratedVideoEncoder"
     "AcceleratedVideoDecodeLinuxGL"
     "AcceleratedVideoDecodeLinuxZeroCopyGL"
     "VaapiOnNvidiaGPUs"
+    "VerticalTabs"
   ];
 
   mkUrl = name: url: {
@@ -51,7 +52,7 @@ in {
       commandLineArgs = [
         "--test-type" # Disables the warning about MiddleClickAutoscroll
         "--enable-blink-features=MiddleClickAutoscroll"
-        "--enable-features=${lib.concatStringsSep "," vaapiFeatures}"
+        "--enable-features=${lib.concatStringsSep "," chromiumFeatures}"
       ];
     })
   ];

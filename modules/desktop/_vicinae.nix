@@ -21,9 +21,15 @@
         "normal"."family" = "Outfit";
       };
 
-      "theme"."dark" = {
-        "name" = "libadwaita-dark";
-        "icon_theme" = "Adwaita";
+      "theme" = {
+        "light" = {
+          "name" = "libadwaita-dark";
+          "icon_theme" = "Adwaita";
+        };
+        "dark" = {
+          "name" = "libadwaita-dark";
+          "icon_theme" = "Adwaita";
+        };
       };
 
       "launcher_window" = {

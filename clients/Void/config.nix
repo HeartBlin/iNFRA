@@ -57,11 +57,8 @@
   # nvidia.nix
   hardware.nvidia.prime = {
     nvidiaBusId = "PCI:1@0:0:0";
-    amdgpuBusId = "PCI:6@0:0:0";
-    offload = {
-      enable = true;
-      enableOffloadCmd = true;
-    };
+    amdgpuBusId = "PCI:5@0:0:0";
+    sync.enable = true;
   };
 
   # user.nix
@@ -88,10 +85,6 @@
     initrd = {
       availableKernelModules = [ "nvme" "xhci_pci" "usbhid" "usb_storage" "sd_mod" ];
       kernelModules = [ "dm-snapshot" ];
-      luks.devices = {
-        "crypt-samsung".crypttabExtraOpts = [ "fido2-device=auto" ];
-        "crypt-intel".crypttabExtraOpts = [ "fido2-device=auto" ];
-      };
     };
   };
 

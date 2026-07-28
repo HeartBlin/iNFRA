@@ -1,4 +1,4 @@
-{ self, ... }:
+{ config, lib, pkgs, self, ... }:
 
 {
   imports = with self.nixosModules; [
@@ -32,8 +32,33 @@
     ];
   };
 
-  # I want fstrim
-  services.fstrim.enable = true;
+  # We use ZFS (not declared in Disko)
+  ## This might downgrade the kernel sometimes
+  networking.hostId = "42c3b839"; # Whatever
+  boot = let
+    latest = lib.last (
+      lib.sort (a: b: (lib.versionOlder a.kernel.version b.kernel.version)) (
+        builtins.attrValues (lib.filterAttrs (
+            name: kernelPackages:
+              (builtins.match "linux_[0-9]+_[0-9]+" name)
+              != null
+              && (builtins.tryEval kernelPackages).success
+              && (!kernelPackages.${config.boot.zfs.package.kernelModuleAttribute}.meta.broken)
+          )
+          pkgs.linuxKernel.packages)
+      )
+    );
+  in {
+    supportedFilesystems = [ "zfs" ];
+    kernelPackages = latest;
+    zfs.extraPools = [ "tank" ];
+  };
+
+  # I want fstrim & scrubbing
+  services = {
+    fstrim.enable = true;
+    zfs.autoScrub.enable = true;
+  };
 
   # System ID
   networking.hostName = "Reason";

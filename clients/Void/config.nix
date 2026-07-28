@@ -36,10 +36,8 @@
     nvidia
 
     # Security
+    agenix
     yubikey
-
-    # Services
-    tailscale
 
     ./disko.nix
   ];

@@ -17,7 +17,13 @@
     # Hardware
     amd
 
+    # Security
+    agenix
+
     # Services
+    acme
+    caddy
+    ddns-updater
     openssh
 
     ./disko.nix

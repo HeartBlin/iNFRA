@@ -21,11 +21,11 @@
     agenix
 
     # Services
-    acme
     caddy
     ddns-updater
     immich
     openssh
+    vaultwarden
 
     ./disko.nix
   ];

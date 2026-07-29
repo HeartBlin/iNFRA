@@ -70,7 +70,7 @@ let
     # Telemetry
     "telemetry.telemetryLevel" = "off";
     "extensions.autoCheckUpdates" = false;
-    "extensions.autoUpdate" = false;
+    "extensions.autoUpdate" = "off";
     "update.mode" = "none";
     "update.showReleaseNotes" = false;
 
@@ -79,13 +79,6 @@ let
     "direnv.path.executable" = "${lib.getExe pkgs.direnv}";
     "errorLens.gutterIconsEnabled" = true;
     "errorLens.messageBackgroundMode" = "message";
-
-    # Custom UI
-    "custom-ui-style.stylesheet".".container > .title"."display" = "none !important;";
-    "custom-ui-style.electron" = {
-      "frame" = false;
-      "titleBarStyle" = "hiddenInset";
-    };
 
     # Git
     "git.autofetch" = true;

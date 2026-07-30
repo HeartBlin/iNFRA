@@ -65,11 +65,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1785216864,
-        "narHash": "sha256-QF9moiMJtq6OVOmzJhpjM78tlMAC5J+tvNWaOz4v9wY=",
+        "lastModified": 1785346857,
+        "narHash": "sha256-7pu4iFZMGMdOYFaV+ezdF6XKmcdGOMGzeYkw69nXfe0=",
         "owner": "feel-co",
         "repo": "hjem",
-        "rev": "7dc2f4b1ee69c9ae3f223ab1fa4e95b93f72bc68",
+        "rev": "a0bfffc389b1cf1742ed75bef361395146c3f966",
         "type": "github"
       },
       "original": {
@@ -139,11 +139,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1785090369,
-        "narHash": "sha256-JmPsbx37jA7Qga36iij0jsbwV4PVRACnqoVroAt/cAc=",
-        "rev": "624af665418d3c65d544145b4d34ad696439570e",
+        "lastModified": 1785318670,
+        "narHash": "sha256-JfsUqyQ4MGL0SvJNPFikXYlUdXg0xMzBdjwTPawZSl4=",
+        "rev": "0954f7ee2f6bb3dc7d4e3d0d8bcb8fd4bde4cfc5",
         "type": "tarball",
-        "url": "https://releases.nixos.org/nixos/unstable/nixos-26.11pre1042126.624af665418d/nixexprs.tar.xz"
+        "url": "https://releases.nixos.org/nixos/unstable/nixos-26.11pre1043649.0954f7ee2f6b/nixexprs.tar.xz"
       },
       "original": {
         "type": "tarball",

@@ -6,6 +6,11 @@ let
   # Service Matrix
   sm = {
     immich = { inherit (config.services.immich) enable port; };
+    sftpgo = {
+      inherit (config.services.sftpgo) enable;
+      port = 8090;
+    };
+
     vaultwarden = {
       inherit (config.services.vaultwarden) enable;
       port = config.services.vaultwarden.config.ROCKET_PORT;
@@ -56,6 +61,13 @@ in {
       "photos.${domain}".extraConfig = lib.mkIf sm.immich.enable ''
         ${mtls}
         reverse_proxy http://127.0.0.1:${toString sm.immich.port}
+      '';
+
+      "files.${domain}".extraConfig = lib.mkIf sm.sftpgo.enable ''
+        ${mtls}
+        reverse_proxy http://127.0.0.1:${toString sm.sftpgo.port} {
+          header_up X-Real-IP {remote_host}
+        }
       '';
 
       "vault.${domain}".extraConfig = lib.mkIf sm.vaultwarden.enable ''

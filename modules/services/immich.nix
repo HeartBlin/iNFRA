@@ -1,6 +1,8 @@
 { config, self, ... }:
 
-{
+let
+  inherit (import ./_helper.nix) domain mTLS;
+in {
   age.secrets.immich = {
     file = "${self}/secrets/immich/env.age";
     owner = "immich";
@@ -21,6 +23,11 @@
       accelerationDevices = null;
       mediaLocation = "/mnt/storage/immich";
     };
+
+    caddy.virtualHosts."photos.${domain}".extraConfig = ''
+      ${mTLS}
+      reverse_proxy http://127.0.0.1:2283
+    '';
   };
 
   # Pedantic "dont get ass-bit"

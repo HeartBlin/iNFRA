@@ -65,7 +65,9 @@ in {
         (mkFolder "Selfhosted" [
           (mkUrl "Immich" "https://photos.heartblin.eu")
           (mkUrl "Jellyfin" "https://movies.heartblin.eu")
-          (mkUrl "Scrutiny" "https://scrutiny.heartblin.eu")
+          (mkUrl "Scrutiny" "https://smart.heartblin.eu")
+          (mkUrl "SFTPGo" "https://files.heartblin.eu")
+          (mkUrl "Uptime" "https://uptime.heartblin.eu")
           (mkUrl "VaultWarden" "https://vault.heartblin.eu")
         ])
         (mkUrl "Mailbox" "https://app.mailbox.org")

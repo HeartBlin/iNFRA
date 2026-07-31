@@ -1,34 +1,6 @@
-{ config, lib, pkgs, self, ... }:
+{ config, pkgs, self, ... }:
 
-let
-  domain = "heartblin.eu";
-
-  # Service Matrix
-  sm = {
-    immich = { inherit (config.services.immich) enable port; };
-    sftpgo = {
-      inherit (config.services.sftpgo) enable;
-      port = 8090;
-    };
-
-    vaultwarden = {
-      inherit (config.services.vaultwarden) enable;
-      port = config.services.vaultwarden.config.ROCKET_PORT;
-    };
-  };
-
-  # mTLS helper
-  mtls = ''
-    tls {
-      client_auth {
-        mode require_and_verify
-        trust_pool file {
-          pem_file /etc/caddy/root.pem
-        }
-      }
-    }
-  '';
-in {
+{
   age.secrets.ovh-dns = {
     file = "${self}/secrets/ovh/dns.age";
     owner = config.services.caddy.group;
@@ -56,31 +28,5 @@ in {
         consumer_key {$OVH_CONSUMER_KEY}
       }
     '';
-
-    virtualHosts = {
-      "photos.${domain}".extraConfig = lib.mkIf sm.immich.enable ''
-        ${mtls}
-        reverse_proxy http://127.0.0.1:${toString sm.immich.port}
-      '';
-
-      "files.${domain}".extraConfig = lib.mkIf sm.sftpgo.enable ''
-        ${mtls}
-        reverse_proxy http://127.0.0.1:${toString sm.sftpgo.port} {
-          header_up X-Real-IP {remote_host}
-        }
-      '';
-
-      "vault.${domain}".extraConfig = lib.mkIf sm.vaultwarden.enable ''
-        ${mtls}
-        reverse_proxy http://127.0.0.1:${sm.vaultwarden.port} {
-          header_up X-Real-IP {remote_host}
-        }
-      '';
-
-      "${domain}".extraConfig = ''
-         ${mtls}
-        respond "Hello World!"
-      '';
-    };
   };
 }

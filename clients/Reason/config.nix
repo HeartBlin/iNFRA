@@ -25,7 +25,9 @@
     ddns-updater
     immich
     openssh
+    scrutiny
     sftpgo
+    uptime
     vaultwarden
 
     ./disko.nix

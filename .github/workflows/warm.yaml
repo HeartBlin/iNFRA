@@ -1,0 +1,47 @@
+name: Cache Warming
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - flake.lock
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 2
+
+      - uses: cachix/install-nix-action@v31
+        with:
+          install_url: https://nixos.org/nix/install
+          extra_nix_config: |
+            experimental-features = nix-command flakes pipe-operators
+
+      - name: Check if nixpkgs changed
+        id: nixpkgs
+        run: |
+          old=$(git show HEAD^:flake.lock | jq -r '.nodes.nixpkgs.locked.narHash // empty')
+          new=$(jq -r '.nodes.nixpkgs.locked.narHash // empty' flake.lock)
+
+          echo "old: $old"
+          echo "new: $new"
+
+          if [[ "$old" != "$new" ]]; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: cachix/cachix-action@v17
+        if: steps.nixpkgs.outputs.changed == 'true'
+        with:
+          name: 1nfr4
+          authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
+
+      - name: Build packages
+        if: steps.nixpkgs.outputs.changed == 'true'
+        run: |
+          nix build .#alejandra-custom

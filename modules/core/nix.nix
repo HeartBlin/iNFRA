@@ -52,17 +52,17 @@
 
       substituters = [
         "https://cache.nixos.org"
-        "https://kantai.cachix.org"
+        "https://1nfr4.cachix.org"
       ];
 
       trusted-substituters = [
         "https://cache.nixos.org"
-        "https://kantai.cachix.org"
+        "https://1nfr4.cachix.org"
       ];
 
       trusted-public-keys = [
         "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
-        "kantai.cachix.org-1:ldVeeaAtkCZs7BUSdLscSem+dX9wtqCT8cpks3HMFMk="
+        "1nfr4.cachix.org-1:QFGiHAxVsOE7BP0OpwyhoMY5Kyv5h4M+MnrH9UyY9Wk="
       ];
     };
   };

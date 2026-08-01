@@ -38,7 +38,7 @@
   users.users.primaryUser = {
     name = "server";
     openssh.authorizedKeys.keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIILBPjrPeKOH2kJLKU634wVC/e3dndCGijZv0gaz997F heartblin@Void"
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFpgPRSO60dVRKcX04oyk/0TW+uSQwSlasKh4e87EMLy heartblin@Void"
     ];
   };
 

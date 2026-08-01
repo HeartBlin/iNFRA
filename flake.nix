@@ -1,6 +1,4 @@
 {
-  description = "My infrastructure's flake";
-
   inputs = {
     nixpkgs.url = "https://channels.nixos.org/nixos-unstable/nixexprs.tar.xz";
     systems.url = "github:nix-systems/x86_64-linux";
@@ -50,9 +48,7 @@
   in {
     nixosConfigurations = import ./clients { inherit inputs self; };
     nixosModules = import ./modules { inherit inputs; };
-    packages = forAllSystems (
-      system:
-        import ./packages { inherit inputs system; }
-    );
+    packages = forAllSystems (system: import ./packages { inherit inputs system; });
+    checks = forAllSystems (system: import ./checks.nix { inherit inputs system; });
   };
 }

@@ -79,7 +79,6 @@ in {
         // workspaceBinds "move-to-workspace" (ws: [ "<Shift><Super>${ws}" ]);
 
       # Unbind those shits
-      "org/gnome/shell/keybindings" =
-        workspaceBinds "switch-to-application" (ws: emptyArray string);
+      "org/gnome/shell/keybindings" = workspaceBinds "switch-to-application" (emptyArray string);
     });
 }

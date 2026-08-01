@@ -50,7 +50,7 @@
   };
 
   # nh.nix
-  programs.nh.flake = "/home/heartblin/Projects/infra";
+  programs.nh.flake = "/home/heartblin/Projects/iNFRA";
 
   # nvidia.nix
   hardware.nvidia.prime = {

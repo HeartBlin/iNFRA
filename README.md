@@ -7,6 +7,7 @@ This is my repo for keeping my NixOS flake in. You should not try to install any
 Even so, YMMV with what's here.
 
 [![Check flake](https://github.com/HeartBlin/iNFRA/actions/workflows/check.yaml/badge.svg)](https://github.com/HeartBlin/iNFRA/actions/workflows/check.yaml)
+[![Cache](https://github.com/HeartBlin/iNFRA/actions/workflows/warm.yaml/badge.svg)](https://github.com/HeartBlin/iNFRA/actions/workflows/warm.yaml)
 [![License: MIT OR Unlicense](https://img.shields.io/badge/License-MIT%20%7C%20Unlicense-blue.svg)](UNLICENSE)
 
 #### Dual-licensed under [MIT](LICENSE) or the [UNLICENSE](UNLICENSE).

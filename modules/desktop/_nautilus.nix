@@ -1,11 +1,10 @@
-{ config, pkgs, self, ... }:
+{ config, pkgs, ... }:
 
 {
   environment.systemPackages = with pkgs; [
     nautilus
     sushi
     nautilus-python
-    self.packages.${pkgs.stdenv.system}.nautilus-taildrop
   ];
 
   hjem.users.primaryUser.files.".config/gtk-3.0/bookmarks".text = ''

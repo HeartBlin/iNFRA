@@ -6,6 +6,7 @@ in {
   services = {
     sftpgo = {
       enable = true;
+      extraReadWriteDirs = [ "/mnt/storage/media" ];
       settings = {
         sftpd.bindings = [ { port = 0; } ];
         ftpd.bindings = [ { port = 0; } ];

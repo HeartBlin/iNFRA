@@ -6,6 +6,9 @@ on:
     branches: [ main ]
     paths:
       - flake.lock
+      - 'packages/alejandra-custom/adblock.patch'
+      - 'packages/alejandra-custom/default.nix'
+      - 'packages/alejandra-custom/style.patch'
 
 jobs:
   build:

@@ -1,4 +1,4 @@
-_:
+{ lib, ... }:
 
 let
   inherit (import ./_helper.nix) domain mTLS;
@@ -29,7 +29,10 @@ in {
     '';
   };
 
-  systemd.tmpfiles.rules = [
-    "d /mnt/storage/media 0750 sftpgo sftpgo -"
-  ];
+  systemd = {
+    services.sftpgo.serviceConfig.UMask = lib.mkForce "0027";
+    tmpfiles.rules = [
+      "d /mnt/storage/media 2750 sftpgo media -"
+    ];
+  };
 }

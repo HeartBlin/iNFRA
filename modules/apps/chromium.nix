@@ -41,9 +41,18 @@ in {
       "EnableMediaRouter" = false;
       "BookmarkBarEnabled" = true;
       "ShowHomeButton" = false;
+
       # Disallow imperative extension installs
       "ExtensionInstallBlocklist" = [ "*" ];
       "ExtensionInstallAllowlist" = extensions;
+
+      # mTLS convenience
+      "AutoSelectCertificateForUrls" = [
+        (builtins.toJSON {
+          pattern = "https://[*.]heartblin.eu";
+          filter.ISSUER.CN = "Reason-Root-CA";
+        })
+      ];
     };
   };
 
@@ -70,12 +79,19 @@ in {
           (mkUrl "Uptime" "https://uptime.heartblin.eu")
           (mkUrl "VaultWarden" "https://vault.heartblin.eu")
         ])
-        (mkUrl "Mailbox" "https://app.mailbox.org")
-        (mkUrl "YouTube" "https://youtube.com")
-        (mkUrl "GitHub" "https://github.com")
-        (mkUrl "Teams" "https://teams.microsoft.com/v2/")
-        (mkUrl "Options" "https://search.nixos.org/options")
-        (mkUrl "Packages" "https://search.nixos.org/packages")
+
+        (mkFolder "Misc" [
+          (mkUrl "Mailbox" "https://app.mailbox.org")
+          (mkUrl "YouTube" "https://youtube.com")
+          (mkUrl "GitHub" "https://github.com")
+          (mkUrl "Teams" "https://teams.microsoft.com/v2/")
+        ])
+
+        (mkFolder "Nix" [
+          (mkUrl "Functions" "https://noogle.dev/")
+          (mkUrl "Options" "https://search.nixos.org/options")
+          (mkUrl "Packages" "https://search.nixos.org/packages")
+        ])
       ];
       other = mkFolder "Other Bookmarks" [ ];
       synced = mkFolder "Mobile Bookmarks" [ ];

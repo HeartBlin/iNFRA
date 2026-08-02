@@ -24,6 +24,7 @@
     caddy
     ddns-updater
     immich
+    jellyfin
     openssh
     scrutiny
     sftpgo
@@ -69,6 +70,9 @@
     fstrim.enable = true;
     zfs.autoScrub.enable = true;
   };
+
+  # I want Mesa
+  hardware.graphics.enable = true;
 
   # System ID
   networking.hostName = "Reason";

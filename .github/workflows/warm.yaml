@@ -24,21 +24,6 @@ jobs:
           extra_nix_config: |
             experimental-features = nix-command flakes pipe-operators
 
-      - name: Check if nixpkgs changed
-        id: nixpkgs
-        run: |
-          old=$(git show HEAD^:flake.lock | jq -r '.nodes.nixpkgs.locked.narHash // empty')
-          new=$(jq -r '.nodes.nixpkgs.locked.narHash // empty' flake.lock)
-
-          echo "old: $old"
-          echo "new: $new"
-
-          if [[ "$old" != "$new" ]]; then
-            echo "changed=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "changed=false" >> "$GITHUB_OUTPUT"
-          fi
-
       - uses: cachix/cachix-action@v17
         if: steps.nixpkgs.outputs.changed == 'true'
         with:

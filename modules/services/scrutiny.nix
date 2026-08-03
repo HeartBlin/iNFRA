@@ -9,7 +9,7 @@ in {
 
       collector = {
         enable = true;
-        schedule = "0 */12 * * *";
+        schedule = "04:00,16:00";
       };
 
       settings.web.listen = {

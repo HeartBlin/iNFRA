@@ -20,6 +20,8 @@
     };
   };
 
+  environment.systemPackages = [ pkgs.prismlauncher ];
+
   # SteamOS kernel tweaks
   boot.kernel.sysctl = {
     "vm.max_map_count" = 2147483642;

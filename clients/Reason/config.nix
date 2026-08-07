@@ -25,6 +25,7 @@
     ddns-updater
     immich
     jellyfin
+    minecraft
     openssh
     scrutiny
     sftpgo

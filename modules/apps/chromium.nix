@@ -29,6 +29,11 @@ in {
   programs.chromium = {
     enable = true;
     inherit extensions;
+
+    defaultSearchProviderEnabled = true;
+    defaultSearchProviderSearchURL = "https://duckduckgo.com/?q={searchTerms}";
+    defaultSearchProviderSuggestURL = "https://duckduckgo.com{searchTerms}&type=list";
+
     extraOpts = {
       "BrowserSignin" = 0;
       "SyncDisabled" = true;

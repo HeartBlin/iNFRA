@@ -1,7 +1,7 @@
 { config, pkgs, lib, ... }:
 
 let
-  renderNode = "/dev/dri/by-path/pci-0000:06:00.0-render";
+  renderNode = "/dev/dri/by-path/pci-0000:05:00.0-render";
   waydroid = "${config.virtualisation.waydroid.package}/bin/waydroid";
 in {
   virtualisation.waydroid = {

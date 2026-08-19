@@ -1,0 +1,78 @@
+name: Build the ISOs
+
+on:
+  schedule:
+    - cron: '0 0 * * 0'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout iNFRA
+        uses: actions/checkout@v7
+
+      - name: Make space
+        uses: jlumbroso/free-disk-space@v1.3.1
+        with:
+          tool-cache: false
+          android: false
+          dotnet: false
+          haskell: false
+          docker-images: false
+          swap-storage: false
+
+          # I just need 3.1GiB free for the ISOs
+          # So, we attack Large misc. packages = 5.3GiB
+          large-packages: true
+
+      - name: Install Nix
+        uses: cachix/install-nix-action@v31
+        with:
+          install_url: https://nixos.org/nix/install
+          extra_nix_config: |
+            experimental-features = nix-command flakes pipe-operators
+            max-jobs = auto
+            cores = 0
+
+      - name: Build Origin & Finality
+        run: |
+          nix build .#nixosConfigurations.Origin.config.system.build.isoImage -o origin-out
+          nix build .#nixosConfigurations.Finality.config.system.build.isoImage -o finality-out
+
+      - name: Patch Origin & Finality
+        run: |
+          nix run .#patch-origin-finality -- origin-out/iso/Origin.iso
+          nix run .#patch-origin-finality -- finality-out/iso/Finality.iso
+
+      - name: Package the artifacts
+        run: |
+          cp -L origin-out/iso/Origin.iso ./Origin.iso
+          cp -L finality-out/iso/Finality.iso ./Finality.iso
+
+          tar -cvf Origin.tar Origin.iso Origin-loop-patch.cpio inc-Origin.cfg
+          tar -cvf Finality.tar Finality.iso Finality-loop-patch.cpio inc-Finality.cfg
+
+      - name: Set a Release Tag
+        run: echo "RELEASE_TAG=$(date +'%Y-%m-%d')" >> $GITHUB_ENV
+
+      - name: Publish Release
+        uses: softprops/action-gh-release@v3.0.2
+        with:
+          tag_name: iso-${{ env.RELEASE_TAG }}
+          name: "ISOs - ${{ env.RELEASE_TAG }}"
+          files: |
+            Origin.tar
+            Finality.tar
+
+      - name: Prune Old Releases (Keep Last 2)
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release list | grep "^iso-" | awk '{print $1}' | sort -r | tail -n +3 | while read -r tag; do
+            echo "Nuke: $tag"
+            gh release delete "$tag" --cleanup-tag -y
+          done

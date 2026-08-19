@@ -21,79 +21,16 @@ It's just lightly modified GNOME.
 
 ### Hosts
 
-<details>
-<summary><strong><code><a href="/clients/Origin/config.nix">Origin</a></code></strong> <sub><em>install iso</em></sub></summary>
-
-<sub>An ISO doesn't exactly have specs...</sub>
-
-</details>
-
-<details>
-<summary><strong><code><a href="/clients/Reason/config.nix">Reason</a></code></strong> <sub><em>server</em></sub></summary>
-
-* **CPU:** AMD Ryzen 5 4600G
-* **RAM:** 16 GB DDR4-2666
-* **GPU:** Radeon Vega
-* **Storage:** [512 GB NVMe](/clients/Reason/disko.nix) (XFS) + 512 GB SATA (ZFS)
-* **Motherboard:** A520M-HDV
-
-</details>
-
-<details>
-<summary><strong><code><a href="/clients/Void/config.nix">Void</a></code></strong> <sub><em>laptop</em></sub></summary>
-
-* **CPU:** AMD Ryzen 7 4800H
-* **RAM:** 16 GB DDR4-3200
-* **GPU:** Radeon Vega + RTX 3050Ti
-* **Storage:** [1 TB NVMe](/clients/Void/disko.nix) (XFS)
-* **Motherboard:** ROG Strix G513IE
-
-</details>
-
-<details>
-<summary><strong><code><a href="https://www.gsmarena.com/google_pixel_9a-13478.php">Thunder</a></code></strong> <sub><em>phone</em></sub></summary>
-
-* **CPU:** Google Tensor G4
-* **RAM:** 8 GB LPDDR5X
-* **GPU:** Mali-G715
-* **Storage:** 128 GB (f2fs)
-* **Model:** Pixel 9a
-
-</details>
-
-<details>
-<summary><strong><code><a href="https://www.gsmarena.com/samsung_galaxy_tab_s9_fe-12517.php">Wind</a></code></strong> <sub><em>tablet</em></sub></summary>
-
-* **CPU:** Exynos 1380
-* **RAM:** 8 GB LPDDR4X
-* **GPU:** Mali-G68 MP5
-* **Storage:** 128 GB (f2fs)
-* **Model:** Galaxy Tab S9 FE
-
-</details>
-
-<details>
-<summary><strong><code><a href="https://www.gsmarena.com/samsung_galaxy_watch5-11748.php">Ice</a></code></strong> <sub><em>watch</em></sub></summary>
-
-* **CPU:** Exynos W920
-* **RAM:** 1.5GB LPDDR4
-* **GPU:** Mali-G68
-* **Storage:** 16 GB (f2fs)
-* **Model:** Galaxy Watch5
-
-</details>
-
-<details>
-<summary><strong><code><a href="https://www.ovhcloud.com/en/">Death</a></code></strong> <sub><em>s3</em></sub></summary>
-
-<sub>C'mon, it's a OVH S3!</sub>
-
-</details>
-
-<details>
-<summary><strong><code><a href="/clients/Finality/config.nix">Finality</a></code></strong> <sub><em>ca iso</em></sub></summary>
-
-<sub>An ISO still doesn't exactly have specs...</sub>
+| Host | Type | CPU / SOC | RAM | GPU | Storage | Motherboard / Device name|
+|---|---|---|---|---|---|---|
+| [`Origin`](/clients/Origin/config.nix) | ISO _<sub>ins</sub>_ | - | - | - | - | - |
+| [`Reason`](/clients/Reason/config.nix) | Server | AMD Ryzen 5 4600G | 16 GB DDR4-2666 | Radeon Vega | [512 GB NVMe](/clients/Reason/disko.nix) (XFS) + 512 GB SATA (ZFS) | A520M-HDV |
+| [`Void`](/clients/Void/config.nix) | Laptop | AMD Ryzen 7 4800H | 16 GB DDR4-3200 | RTX 3050 Ti | [1 TB NVMe](/clients/Void/disko.nix) (XFS) | ROG Strix G513IE |
+| [`Thunder`](https://www.gsmarena.com/google_pixel_9a-13478.php) | Phone | Google Tensor G4 | 8 GB LPDDR5X | Mali-G715 | 128 GB (f2fs) | Pixel 9a |
+| [`Wind`](https://www.gsmarena.com/samsung_galaxy_tab_s9_fe-12517.php) | Tablet | Exynos 1380 | 8GB LPDDR4X | Mali-G68 MP5 | 128 GB (f2fs) | Galaxy Tab S9 FE |
+| [`Ice`](https://www.gsmarena.com/samsung_galaxy_watch5-11748.php) | Watch | Exynos W920 | 1.5GB LPDDR4 | Mali-G68 | 16 GB (f2fs) | Galaxy Watch5 |
+| [`Death`](https://www.ovhcloud.com/en/) | S3 | - | - | - | - | - |
+| [`Finality`](/clients/Finality/config.nix) | ISO _<sub>CA</sub>_ | - | - | - | - | - |
 
 </details>
 

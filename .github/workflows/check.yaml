@@ -16,11 +16,22 @@ jobs:
     name: Lint and check flake
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7
-      - uses: cachix/install-nix-action@v31
+      - name: Checkout iNFRA
+        uses: actions/checkout@v7
+
+      - name: Inject Deploy Key
+        uses: webfactory/ssh-agent@v0.10.0
+        with:
+          ssh-private-key: ${{ secrets.STIGMATA_DEPLOY_KEY }}
+
+      - name: Install Nix
+        uses: cachix/install-nix-action@v31
         with:
           install_url: https://nixos.org/nix/install
           extra_nix_config: |
             experimental-features = nix-command flakes pipe-operators
+            max-jobs = auto
+            cores = 0
+
       - name: Check flake
         run: nix flake check
